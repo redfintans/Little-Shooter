@@ -4,3 +4,4 @@ Game releases.
 Fixed bug allowing player to score points after dying.
 ## [1.2] 25/3/2023
 Added secret game over screen for mobile players.
+Game is put on Github.
