@@ -213,7 +213,7 @@
 						element.parentNode.removeChild(element);
 						enemies.splice(i, 1);
 						i--;
-						laser.y = -laser.h;
+						laser.y = -laser.h - 200;
 						score += 100;
 					}
 				} else if (intersects(hero, enemies[i])) {
