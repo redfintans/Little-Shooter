@@ -6,5 +6,6 @@ Fixed bug allowing player to score points after dying.
 Added secret game over screen for mobile players.
 Fixed bug causing bullet to kill offscreen enemies with similar y values to killed enemies.
 Game is put up on Github.
-## [1.0.0.3] incomplete
-In progress. LOL
+## [1.0.0.3] 26/3/2023
+Fixed graphic bug causing bullets to shoot in such quick succession they appear to pierce enemies.
+! New graphic bug noticed causing bullets not to show up if shot too close to enemy.
