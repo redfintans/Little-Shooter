@@ -67,7 +67,7 @@
 		<p>REFRESH PAGE TO RESTART GAME</p>
 	</div>
 	<div id="welcometext">
-		<h2>LITTLE SHOOTER [1.0.0.2]</h2>
+		<h2>LITTLE SHOOTER [1.0.0.3]</h2>
 		<p>Arrow keys or WASD to move. <br>
 		Press F to dash and teleport forward! <br>
 		Avoid getting hit by enemies! <br> <br>
@@ -97,6 +97,7 @@
 		var score = 0;
 		var iterations = 0;
 		var dashCooldown = 0;
+		var spaceKeyHeld = false;
 		var gameover = false;
 
 		var controller = new Object();
@@ -147,9 +148,14 @@
 			if (controller.right) {
 				hero.x += HERO_MOVEMENT;
 			}
-			if (controller.space && laser.y <= 10) {
+			if (controller.space && laser.y <= 10 && spaceKeyHeld == false) {
 				laser.x = hero.x + 8;
-				laser.y = hero.y - laser.h;
+				laser.y = hero.y - laser.h;	
+			}
+			if (controller.space) {
+				spaceKeyHeld = true;
+			} else {
+				spaceKeyHeld = false;
 			}
 			if (controller.dash && dashCooldown == 0) {
 				if (controller.left && controller.up) {
@@ -206,16 +212,14 @@
 
 		function checkCollisions() {
 			for (var i = 0; i < enemies.length; i++) {
-				if (intersects(laser, enemies[i])) {
-					if (!gameover) {
-						var element = document.getElementById(enemies[i].element);
-						element.style.visibilty = 'hidden';
-						element.parentNode.removeChild(element);
-						enemies.splice(i, 1);
-						i--;
-						laser.y = -laser.h - 200;
-						score += 100;
-					}
+				if (intersects(laser, enemies[i]) && !gameover) {
+					var element = document.getElementById(enemies[i].element);
+					element.style.visibilty = 'hidden';
+					element.parentNode.removeChild(element);
+					enemies.splice(i, 1);
+					i--;
+					laser.y = -laser.h - 200;
+					score += 100;
 				} else if (intersects(hero, enemies[i])) {
 					gameOver();
 				} else if (enemies[i].y + enemies[i].h >= 500) {
@@ -257,7 +261,7 @@
 				enemies[i].x += getRandom(7) - 3;
 				ensureBounds(enemies[i], true);
 			}
-			if (!gameover) {
+			if (!gameover && laser.y > -200) {
 				laser.y -= 12;
 			}	
 		}
