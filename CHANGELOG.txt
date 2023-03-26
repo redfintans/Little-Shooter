@@ -8,4 +8,5 @@ Fixed bug causing bullet to kill offscreen enemies with similar y values to kill
 Game is put up on Github.
 ## [1.0.0.3] 26/3/2023
 Fixed graphic bug causing bullets to shoot in such quick succession they appear to pierce enemies.
+Fixed bug allowing players to press and hold space and spam shoot.
 ! New graphic bug noticed causing bullets not to show up if shot too close to enemy.
