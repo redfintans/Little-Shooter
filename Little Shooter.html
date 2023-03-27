@@ -48,13 +48,36 @@
 			border: 5px outset greenyellow;
 			background-color: lightskyblue;
 			text-align: center;
-			font-family: Verdana, sans-serif;
+			font-family: Verdana, Arial, Helvetica, sans-serif;
 			position: absolute;
 			width: 400px;
 			height: 400px;
 			left: 700px;
 			top: 100px;
 		}
+		#secret69 {
+			border: 4px solid #f4f4f4;
+			background-color: #ffffff;
+			text-align: center;
+			font-family: Verdana, Arial, Helvetica, sans-serif;
+			font-size: 6.9pt;
+			color: #dedede;
+			position: absolute;
+			width: 69px;
+			height: 69px;
+			left: 690px;
+			top: 569px;
+		}
+		#fillerButton {
+			border: 1px solid #ffffff;
+			background-color: #ffffff;
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			left: 690px;
+			top: 0px;
+		}
+		#gettro
 	</style>
 </head>
 <body>
@@ -62,12 +85,14 @@
 	<div id="hero"></div>
 	<div id="laser"></div>
 	<div id="score"></div>
+	<button id="secret69" onclick="extraPointsButton()">helo</button>
+	<button id="fillerButton"></button>
 	<div id="gameover">
 		<h2>GAME OVER</h2>
 		<p>REFRESH PAGE TO RESTART GAME</p>
 	</div>
 	<div id="welcometext">
-		<h2>LITTLE SHOOTER [1.0.0.3]</h2>
+		<h2>LITTLE SHOOTER [1.0.0.4]</h2>
 		<p>Arrow keys or WASD to move. <br>
 		Press F to dash and teleport forward! <br>
 		Avoid getting hit by enemies! <br> <br>
@@ -75,8 +100,9 @@
 		Shoot enemies with SPACE! <br>
 		Hitting enemies gives you an extra shot! <br> <br>
 		Challenge your friends to beat your highscore! <br>
-		And most importantly... HAVE FUN!! <br> <br> <br>
-		also my highscore is 16100 so HAVE FUN TRYING TO BEAT ME MWAHAHAHAH (evil laugh)
+		And most importantly... HAVE FUN!! <br> <br>
+		also my highscore is 22769 so HAVE FUN TRYING TO BEAT ME MWAHAHAHAH (evil laugh) <br> <br>
+		and my friend david got 35200 >:D
 		</p>
 	</div>
 	<script>
@@ -158,6 +184,7 @@
 				spaceKeyHeld = false;
 			}
 			if (controller.dash && dashCooldown == 0) {
+				dashCooldown = 30;
 				if (controller.left && controller.up) {
 					hero.x -= 25 * HERO_MOVEMENT;
 					hero.y -= 25 * HERO_MOVEMENT;
@@ -178,8 +205,9 @@
 					hero.y -= 30 * HERO_MOVEMENT;
 				} else if (controller.down) {
 					hero.y += 30 * HERO_MOVEMENT;
+				} else {
+					dashCooldown = 0;
 				}
-				dashCooldown = 30;
 			}
 
 			ensureBounds(hero);
@@ -291,6 +319,13 @@
 
 		function getRandom(maxSize) {
 			return parseInt(Math.random() * maxSize);
+		}
+
+		function extraPointsButton() {
+			score += 69;
+			var element = document.getElementById('secret69');
+			element.style.visibility = 'hidden';
+			element.parentNode.removeChild(element);
 		}
 
 		function loop() {
