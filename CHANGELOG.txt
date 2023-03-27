@@ -14,4 +14,5 @@ Fixed bug allowing players to press and hold space and spam shoot.
 ## [1.0.0.4] 27/3/2023
 Fixed bug causing teleport dash to go on cooldown even after failing.
 Added secret joke button that gives 69 points.
+Fixed bug causing laptop users to be called mobile users.
 Changed welcome text.
