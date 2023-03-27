@@ -125,6 +125,7 @@
 		var dashCooldown = 0;
 		var spaceKeyHeld = false;
 		var gameover = false;
+		var onLaptop = false;
 
 		var controller = new Object();
 		var enemies = new Array();
@@ -141,6 +142,7 @@
 
 		function toggleKey(keyCode, isPressed) {
 			//console.log(keyCode);
+			onLaptop = true;
 			if (keyCode == LEFT_KEY || keyCode == A_KEY) {
 				controller.left = isPressed;
 			}
@@ -267,7 +269,7 @@
 			element = document.getElementById(laser.element);
 			element.style.visibility = 'hidden';
 			element = document.getElementById('gameover');
-			if (score == 0) {
+			if (!onLaptop) {
 				element.innerHTML = "<h2>GAME OVER</h2><p>THIS GAME IS NOT MOBILE FRIENDLY<br>DONT EVEN TRY LOL</p>"
 			}
 			element.style.visibility = 'visible';
