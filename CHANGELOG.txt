@@ -11,6 +11,7 @@ Game is put up on Github.
 ## [1.0.0.3] 26/3/2023
 Fixed graphic bug causing bullets to shoot in such quick succession they appear to pierce enemies.
 Fixed bug allowing players to press and hold space and spam shoot.
+Fixed bug causing to keep moving offscreen potentially causing performance issues.
 ## [1.0.0.4] 27/3/2023
 Fixed bug causing teleport dash to go on cooldown even after failing.
 Added secret joke button that gives 69 points.
