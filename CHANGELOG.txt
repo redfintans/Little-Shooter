@@ -17,3 +17,6 @@ Fixed bug causing teleport dash to go on cooldown even after failing.
 Added secret joke button that gives 69 points.
 Fixed bug causing laptop users to be called mobile users.
 Changed welcome text.
+## [1.0.0.5] inprogress
+General clean up of code.
+Added enemy death animation.
