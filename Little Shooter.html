@@ -7,6 +7,7 @@
 			width: 20px;
 			height: 20px;
 			position: absolute;
+			z-index: 3;
 		}
 		#background {
 			background: #000000;
@@ -22,12 +23,14 @@
 			width: 2px;
 			height: 50px;
 			position: absolute;
+			z-index: 3;
 		}
 		.enemy {
 			background: #0000ff; 
 			width: 35px;
 			height: 35px;
 			position: absolute;
+			z-index: 1;
 		}
 		#score {
 			color: #ffffff;
@@ -35,6 +38,7 @@
 			position: absolute;
 			left: 20px;
 			top: 20px;
+			z-index: 5;
 		}
 		#gameover {
 			color: #ff0000;
@@ -44,6 +48,7 @@
 			top: 200px;
 			visibility: hidden;
 			text-align: center;
+			z-index: 5;
 		}
 		#welcometext {
 			border: 5px outset greenyellow;
@@ -84,14 +89,14 @@
 			height: 18px;
 			position: absolute;
 			transform: rotate(45deg);
-			z-index: -1;
+			z-index: 2;
 		}
 		.explosion2 {
 			background: #39ff14;
 			width: 7px;
 			height: 7px;
 			position: absolute;
-			z-index: -1;
+			z-index: 2;
 		}
 	</style>
 </head>
@@ -107,7 +112,7 @@
 		<p>REFRESH PAGE TO RESTART GAME</p>
 	</div>
 	<div id='welcometext'>
-		<h2>LITTLE SHOOTER [1.0.0.5]</h2>
+		<h2>LITTLE SHOOTER [1.0.0.6]</h2>
 		<p>Arrow keys or WASD to move. <br>
 		Press F to dash and teleport forward! <br>
 		Avoid getting hit by enemies! <br> <br>
@@ -378,6 +383,7 @@
 
 		function extraPointsButton() {
 			score += 69;
+			iterations += 1250;
 			var element = document.getElementById('secret69');
 			element.style.visibility = 'hidden';
 			element.parentNode.removeChild(element);
