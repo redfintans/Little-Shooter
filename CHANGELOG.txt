@@ -26,3 +26,4 @@ Added hardmode to secret button.
 ## [1.4.6.8] unfinished
 Fixed bug causing up and w (and etc.) to be incompatible.
 Added large hardmode rework.
+Changed welcome text.
