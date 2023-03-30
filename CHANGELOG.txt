@@ -1,25 +1,25 @@
 ## [1.0.0.0] 23/3/2023
 Game releases.
-## [1.0.0.1] 24/3/2023
+## [1.0.1.1] 24/3/2023
 Fixed bug allowing player to score points after dying.
 Changed welcome text.
-## [1.0.0.2] 25/3/2023
+## [1.0.3.2] 25/3/2023
 Added secret game over screen for mobile players.
 Fixed bug causing bullet to kill offscreen enemies with similar y values to killed enemies.
 Changed welcome text.
 Game is put up on Github.
-## [1.0.0.3] 26/3/2023
+## [1.0.4.3] 26/3/2023
 Fixed graphic bug causing bullets to shoot in such quick succession they appear to pierce enemies.
 Fixed bug allowing players to press and hold space and spam shoot.
 Fixed bug causing to keep moving offscreen potentially causing performance issues.
-## [1.0.0.4] 27/3/2023
+## [1.1.5.4] 27/3/2023
 Fixed bug causing teleport dash to go on cooldown even after failing.
 Added secret joke button that gives 69 points.
 Fixed bug causing laptop users to be called mobile users.
 Changed welcome text.
-## [1.0.0.5] 28/3/2023
+## [1.2.5.5] 28/3/2023
 General clean up of code.
 Added enemy death animation.
-## [1.0.0.6] 29/3/2023
+## [1.3.5.6] 29/3/2023
 Fixed layering issues.
 Added hardmode to secret button.
