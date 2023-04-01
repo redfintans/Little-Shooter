@@ -131,7 +131,7 @@
 	</div>
 	<div id='hardmodetext'><h2>HAVE FUN LOL</h2></div>
 	<div id='welcometext'>
-		<h2>LITTLE SHOOTER [1.4.6.7]</h2>
+		<h2>LITTLE SHOOTER [1.1.2.8]</h2>
 		<p>Arrow keys or WASD to move. <br>
 		Press F to dash and teleport forward! <br>
 		Avoid getting hit by enemies! <br> <br>
@@ -140,7 +140,7 @@
 		Hitting enemies gives you an extra shot! <br> <br>
 		Challenge your friends to beat your highscore! <br>
 		And most importantly... HAVE FUN!! <br> <br>
-		also my highscores are 22700 and 2969 so have fun tryin to beat me<br> <br>
+		also my highscores are 22700 and 3969 so have fun tryin to beat me<br> <br>
 		and my friend david got 35200 >:D
 		</p>
 	</div>
@@ -171,6 +171,7 @@
 		var waiter = new Object();
 		var enemies = new Array();
 		var explosions = new Array();
+		var date = new Date();
 
 		function createSprite(element, x, y, w, h) {
 			var result = new Object();
@@ -230,7 +231,11 @@
 			if (controller.right || controller.d) {
 				hero.x += HERO_MOVEMENT;
 			}
-			if (controller.space && laser.y <= 10 && spaceKeyHeld == false) {
+			if (controller.space && laser.y <= 10 && spaceKeyHeld == false && !gameover) {
+				if (date.getDate() == 1 && date.getMonth() == 3) {
+					var boom = new Audio("vine-boom.mp3");
+					boom.play();
+				}
 				laser.x = hero.x + 8;
 				laser.y = hero.y - laser.h;	
 			}
