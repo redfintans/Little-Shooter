@@ -333,6 +333,9 @@
 			if (!onLaptop) {
 				element.innerHTML = '<h2>GAME OVER</h2><p>THIS GAME IS NOT MOBILE FRIENDLY<br>DONT EVEN TRY LOL</p>'
 			}
+			if (date.getDate() == 1 && date.getMonth() == 3) {
+				element.innerHTML = '<h1>GIT PRANKed</h1>'
+			}
 			element.style.visibility = 'visible';
 		}
 
@@ -440,16 +443,14 @@
 						}
 						delete waiter['1' + key.substring(1)];
 						waiter['2' + key.substring(1)] = 1;
+						i--;
 					} else if (key.slice(0, 10) == '2explosion') {
 						var element = document.getElementById(key.substring(1));
 						element.style.visibility = 'hidden';
 						element.parentNode.removeChild(element);
-						if (hardMode) {
-							explosions.splice(i - 1, 1);
-						} else {
-							explosions.splice(i, 1);
-						}
+						explosions.splice(0, 1);
 						delete waiter['2' + key.substring(1)];
+						i--;
 					} else if (key == 'hardmode') {
 						var element = document.getElementById('hardmodetext');
 						element.style.visibility = 'hidden';
