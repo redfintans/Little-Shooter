@@ -116,12 +116,21 @@
 			position: absolute;
 			z-index: 2;
 		}
+		#cooldownbar {
+			background: #b20000;
+			width: 40px;
+			height: 2px;
+			position: absolute;
+			visibility: hidden;
+			z-index: 3;
+		}
 	</style>
 </head>
 <body>
 	<div id='background'></div>
 	<div id='hero'></div>
 	<div id='laser'></div>
+	<div id='cooldownbar'></div>
 	<div id='score'></div>
 	<button id='secret69' onclick='hardmode()'>helo</button>
 	<button id='fillerbutton'></button>
@@ -131,7 +140,7 @@
 	</div>
 	<div id='hardmodetext'><h2>HAVE FUN LOL</h2></div>
 	<div id='welcometext'>
-		<h2>LITTLE SHOOTER [1.1.3.2]</h2>
+		<h2>LITTLE SHOOTER [1.1.0.3]</h2>
 		<p>Arrow keys or WASD to move. <br>
 		Press F to dash and teleport forward! <br>
 		Avoid getting hit by enemies! <br> <br>
@@ -161,7 +170,6 @@
 		var lastLoopRun = 0;
 		var score = 0;
 		var iterations = 0;
-		var dashCooldown = 0;
 		var spaceKeyHeld = false;
 		var gameover = false;
 		var onLaptop = false;
@@ -172,7 +180,7 @@
 		var enemies = new Array();
 		var explosions = new Array();
 		var date = new Date();
-		var boom = new Audio("vine-boom.mp3");
+		var boom = new Audio('vine-boom.mp3');
 
 		function createSprite(element, x, y, w, h) {
 			var result = new Object();
@@ -234,7 +242,7 @@
 			}
 			if (controller.space && laser.y <= 10 && spaceKeyHeld == false && !gameover) {
 				if (date.getDate() == 1 && date.getMonth() == 3) {
-					var boom = new Audio("vine-boom.mp3");
+					var boom = new Audio('vine-boom.mp3');
 					boom.play();
 				}
 				laser.x = hero.x + 8;
@@ -245,8 +253,9 @@
 			} else {
 				spaceKeyHeld = false;
 			}
-			if (controller.dash && dashCooldown == 0) {
-				dashCooldown = 30;
+			if (controller.dash && (waiter.dashCooldown == 0 || waiter.dashCooldown == null)) {
+				waiter.dashCooldown = 30;
+				waiter.coolDownBar = 30;
 				if ((controller.left || controller.a) && (controller.up || controller.w)) {
 					hero.x -= 25 * HERO_MOVEMENT;
 					hero.y -= 25 * HERO_MOVEMENT;
@@ -268,10 +277,10 @@
 				} else if (controller.down || controller.s) {
 					hero.y += 30 * HERO_MOVEMENT;
 				} else {
-					dashCooldown = 0;
+					waiter.dashCooldown = 0;
+					waiter.coolDownBar = 0;
 				}
 			}
-
 			ensureBounds(hero);
 		}
 
@@ -329,6 +338,9 @@
 			element.style.visibility = 'hidden';
 			element = document.getElementById(laser.element);
 			element.style.visibility = 'hidden';
+			element = document.getElementById(cooldownbar.element);
+			element.style.visibility = 'hidden';
+
 			element = document.getElementById('gameover');
 			if (!onLaptop) {
 				element.innerHTML = '<h2>GAME OVER</h2><p>THIS GAME IS NOT MOBILE FRIENDLY<br>DONT EVEN TRY LOL</p>'
@@ -342,6 +354,7 @@
 		function showSprites() {
 			setPosition(hero);
 			setPosition(laser);
+			setPosition(cooldownbar);
 			for (var i = 0; i < enemies.length; i++) {
 				setPosition(enemies[i]);
 			}
@@ -365,7 +378,66 @@
 			}
 			if (!gameover && laser.y > -200) {
 				laser.y -= 12;
-			}	
+			}
+			if (!gameover) {
+				cooldownbar.x = hero.x - 10;
+				cooldownbar.y = hero.y - 10;
+			}
+			var keys = Object.keys(waiter);
+			keys.forEach((key, index) => {
+				if (key.slice(0, 9) == 'explosion') {
+					if (waiter[key] == 1) {
+						var element = document.getElementById(key);
+						element.className = 'explosion2';
+						for (var i = 0; i < explosions.length; i++) {
+							if (document.getElementById(explosions[i].element).className = 'explosion2') {
+								if (hardMode) {
+									explosions[i].x += 5.5;
+									explosions[i].y += 5.5;
+								} else {
+									explosions[i].x += 6.5;
+									explosions[i].y += 6.5;
+								}
+								break;
+							}
+						}
+					} else if (waiter[key] == 0) {
+						var element = document.getElementById(key);
+						element.style.visibility = 'hidden';
+						element.parentNode.removeChild(element);
+						explosions.splice(0, 1);
+					}
+				} else if (key == 'hardmode' && waiter[key] == 0) {
+					var element = document.getElementById('hardmodetext');
+					element.style.visibility = 'hidden';
+				} else if (key == 'coolDownBar') {
+					if (waiter[key] == 30) {
+						cooldownbar.w = 40;
+						var element = document.getElementById(cooldownbar.element);
+						element.style.width = cooldownbar.w + 'px';
+						element.style.visibility = 'visible';
+					} else if (waiter[key] == 24) {
+						cooldownbar.w = 32;
+						var element = document.getElementById(cooldownbar.element);
+						element.style.width = cooldownbar.w + 'px';
+					} else if (waiter[key] == 18) {
+						cooldownbar.w = 24;
+						var element = document.getElementById(cooldownbar.element);
+						element.style.width = cooldownbar.w + 'px';
+					} else if (waiter[key] == 12) {
+						cooldownbar.w = 16;
+						var element = document.getElementById(cooldownbar.element);
+						element.style.width = cooldownbar.w + 'px';
+					} else if (waiter[key] == 6) {
+						cooldownbar.w = 8;
+						var element = document.getElementById(cooldownbar.element);
+						element.style.width = cooldownbar.w + 'px';
+					} else if (waiter[key] == 0) {
+						var element = document.getElementById(cooldownbar.element);
+						element.style.visibility = 'hidden';
+					}
+				}
+			})
 		}
 
 		function addEnemy() {
@@ -423,39 +495,16 @@
 			element.className = 'explosion1';
 			document.children[0].appendChild(element);
 			explosions[explosions.length] = explosion;
-			waiter['1' + elementName] = 2;
+			waiter [elementName] = 2;
 		}
 
-		function animateFrames() {
+		function tickWaiter() {
 			var keys = Object.keys(waiter);
-			keys.forEach((key, i) => {
-				waiter[key] -= 1;
-				if (waiter[key] == 0) {
-					if (key.slice(0, 10) == '1explosion') {
-						var element = document.getElementById(key.substring(1));
-						element.className = 'explosion2';
-						if (hardMode) {
-							explosions[i - 1].x += 6;
-							explosions[i - 1].y += 6;
-						} else {
-							explosions[i].x += 6.5;
-							explosions[i].y += 6.5;
-						}
-						delete waiter['1' + key.substring(1)];
-						waiter['2' + key.substring(1)] = 1;
-						i--;
-					} else if (key.slice(0, 10) == '2explosion') {
-						var element = document.getElementById(key.substring(1));
-						element.style.visibility = 'hidden';
-						element.parentNode.removeChild(element);
-						explosions.splice(0, 1);
-						delete waiter['2' + key.substring(1)];
-						i--;
-					} else if (key == 'hardmode') {
-						var element = document.getElementById('hardmodetext');
-						element.style.visibility = 'hidden';
-						//delete waiter.hardmode;
-					}
+			keys.forEach((key, index) => {
+				if (waiter[key] > 0) {
+					waiter[key] = waiter[key] - 1;
+				} else {
+					delete waiter[key];
 				}
 			})
 		}
@@ -487,20 +536,17 @@
 
 		function loop() {
 			if (new Date().getTime() - lastLoopRun > 40) {
-				updatePositions();
+				tickWaiter();
 				handleControls();
+				updatePositions();
 				checkCollisions();
 
 				addEnemy();
 
-				animateFrames();
 				showSprites();
 
 				lastLoopRun = new Date().getTime();
 				iterations++;
-				if (dashCooldown > 0) {
-					dashCooldown--;
-				}
 			}
 			setTimeout('loop();', 2);
 		}
@@ -514,6 +560,7 @@
 
 		var hero = createSprite('hero', 250, 460, 20, 20);
 		var laser = createSprite('laser', 0, -120, 2, 50);
+		var cooldownbar = createSprite('cooldownbar', 235, 470, 50, 2);
 
 		loop();
 
