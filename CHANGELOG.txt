@@ -1,6 +1,7 @@
-## [1.1.0.3] incomplete
+## [1.1.0.3] 4/4/23
 General clean up of code.
-
+Added cooldown bar for teleport dash.
+Changed welcome text.
 ## [1.1.0.2] 1/4/23
 Fixed bug causing game to crash when multiple explosions are onscreen.
 Added April fool's day text that activates every April 1st.
