@@ -90,7 +90,7 @@
 			width: 69px;
 			height: 69px;
 			left: 690px;
-			top: 569px;
+			top: 6.9px;
 		}
 		#fillerbutton {
 			border: 1px solid #ffffff;
@@ -116,8 +116,16 @@
 			position: absolute;
 			z-index: 2;
 		}
-		#cooldownbar {
+		#cooldownbar1 {
 			background: #b20000;
+			width: 40px;
+			height: 2px;
+			position: absolute;
+			visibility: hidden;
+			z-index: 3;
+		}
+		#cooldownbar2 {
+			background: #39ff14;
 			width: 40px;
 			height: 2px;
 			position: absolute;
@@ -130,7 +138,8 @@
 	<div id='background'></div>
 	<div id='hero'></div>
 	<div id='laser'></div>
-	<div id='cooldownbar'></div>
+	<div id='cooldownbar1'></div>
+	<div id='cooldownbar2'></div>
 	<div id='score'></div>
 	<button id='secret69' onclick='hardmode()'>helo</button>
 	<button id='fillerbutton'></button>
@@ -140,7 +149,7 @@
 	</div>
 	<div id='hardmodetext'><h2>HAVE FUN LOL</h2></div>
 	<div id='welcometext'>
-		<h2>LITTLE SHOOTER [1.1.0.3]</h2>
+		<h2>LITTLE SHOOTER [1.1.0.4]</h2>
 		<p>Arrow keys or WASD to move. <br>
 		Press F to dash and teleport forward! <br>
 		Avoid getting hit by enemies! <br> <br>
@@ -149,7 +158,7 @@
 		Hitting enemies gives you an extra shot! <br> <br>
 		Challenge your friends to beat your highscore! <br>
 		And most importantly... HAVE FUN!! <br> <br>
-		also my highscores are 22700 and 3969 so have fun tryin to beat me<br> <br>
+		also my highscores are 22700 and 4169 so have fun tryin to beat me<br> <br>
 		and my friend david got 35200 >:D
 		</p>
 	</div>
@@ -288,6 +297,10 @@
 			return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
 		}
 
+		function center(lengthA, lengthB) {
+			return (lengthB - lengthA) / 2;
+		}
+
 		function ensureBounds(sprite, ignoreY) {
 			if (sprite.x < 20) {
 				sprite.x = 20;
@@ -338,8 +351,10 @@
 			element.style.visibility = 'hidden';
 			element = document.getElementById(laser.element);
 			element.style.visibility = 'hidden';
-			element = document.getElementById(cooldownbar.element);
+			element = document.getElementById(cooldownbar1.element);
 			element.style.visibility = 'hidden';
+			//element = document.getElementById(cooldownbar2.element);
+			//element.style.visibility = 'hidden';
 
 			element = document.getElementById('gameover');
 			if (!onLaptop) {
@@ -354,7 +369,8 @@
 		function showSprites() {
 			setPosition(hero);
 			setPosition(laser);
-			setPosition(cooldownbar);
+			setPosition(cooldownbar1);
+			//setPosition(cooldownbar2);
 			for (var i = 0; i < enemies.length; i++) {
 				setPosition(enemies[i]);
 			}
@@ -380,9 +396,14 @@
 				laser.y -= 12;
 			}
 			if (!gameover) {
-				cooldownbar.x = hero.x - 10;
-				cooldownbar.y = hero.y - 10;
+				cooldownbar1.x = hero.x - 10;
+				cooldownbar1.y = hero.y - 10;
+				//cooldownbar2.x = hero.x - 10;
+				//cooldownbar2.y = hero.y - 17;
 			}
+		}
+
+		function handleWaiter() {
 			var keys = Object.keys(waiter);
 			keys.forEach((key, index) => {
 				if (key.slice(0, 9) == 'explosion') {
@@ -410,30 +431,30 @@
 				} else if (key == 'hardmode' && waiter[key] == 0) {
 					var element = document.getElementById('hardmodetext');
 					element.style.visibility = 'hidden';
-				} else if (key == 'coolDownBar') {
+				} else if (key == 'coolDownBar' && !gameover) {
 					if (waiter[key] == 30) {
-						cooldownbar.w = 40;
-						var element = document.getElementById(cooldownbar.element);
-						element.style.width = cooldownbar.w + 'px';
+						cooldownbar1.w = 40;
+						var element = document.getElementById(cooldownbar1.element);
+						element.style.width = cooldownbar1.w + 'px';
 						element.style.visibility = 'visible';
 					} else if (waiter[key] == 24) {
-						cooldownbar.w = 32;
-						var element = document.getElementById(cooldownbar.element);
-						element.style.width = cooldownbar.w + 'px';
+						cooldownbar1.w = 32;
+						var element = document.getElementById(cooldownbar1.element);
+						element.style.width = cooldownbar1.w + 'px';
 					} else if (waiter[key] == 18) {
-						cooldownbar.w = 24;
-						var element = document.getElementById(cooldownbar.element);
-						element.style.width = cooldownbar.w + 'px';
+						cooldownbar1.w = 24;
+						var element = document.getElementById(cooldownbar1.element);
+						element.style.width = cooldownbar1.w + 'px';
 					} else if (waiter[key] == 12) {
-						cooldownbar.w = 16;
-						var element = document.getElementById(cooldownbar.element);
-						element.style.width = cooldownbar.w + 'px';
+						cooldownbar1.w = 16;
+						var element = document.getElementById(cooldownbar1.element);
+						element.style.width = cooldownbar1.w + 'px';
 					} else if (waiter[key] == 6) {
-						cooldownbar.w = 8;
-						var element = document.getElementById(cooldownbar.element);
-						element.style.width = cooldownbar.w + 'px';
+						cooldownbar1.w = 8;
+						var element = document.getElementById(cooldownbar1.element);
+						element.style.width = cooldownbar1.w + 'px';
 					} else if (waiter[key] == 0) {
-						var element = document.getElementById(cooldownbar.element);
+						var element = document.getElementById(cooldownbar1.element);
 						element.style.visibility = 'hidden';
 					}
 				}
@@ -483,11 +504,11 @@
 		function enemyExplode(enemyId, enemyX, enemyY) {
 			var elementName = 'explosion' + enemyId.substring(5);
 			if (hardMode) {
+				var explodeX = enemyX + 7;
+				var explodeY = enemyY + 7;
+			} else {
 				var explodeX = enemyX + 3;
 				var explodeY = enemyY + 3;
-			} else {
-				var explodeX = enemyX + 1;
-				var explodeY = enemyY + 1;
 			}
 			var explosion = createSprite(elementName, explodeX, explodeY, 16, 16);
 			var element = document.createElement('div');
@@ -540,6 +561,7 @@
 				handleControls();
 				updatePositions();
 				checkCollisions();
+				handleWaiter();
 
 				addEnemy();
 
@@ -560,7 +582,8 @@
 
 		var hero = createSprite('hero', 250, 460, 20, 20);
 		var laser = createSprite('laser', 0, -120, 2, 50);
-		var cooldownbar = createSprite('cooldownbar', 235, 470, 50, 2);
+		var cooldownbar1 = createSprite('cooldownbar1', 235, 470, 50, 2);
+		//var cooldownbar2 = createSprite('cooldownbar2', 235, 470, 50, 2);
 
 		loop();
 
