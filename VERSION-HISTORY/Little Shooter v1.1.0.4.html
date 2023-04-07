@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		#hero {
+			background: #ff0000;
+			width: 20px;
+			height: 20px;
+			position: absolute;
+			z-index: 3;
+		}
+		#background {
+			background: #000000;
+			width: 500px;
+			height: 500px;
+			position: absolute;
+			left: 0px;
+			top: 0px;
+			z-index: -10;
+		}
+		#laser {
+			background: #39ff14;
+			width: 2px;
+			height: 50px;
+			position: absolute;
+			z-index: 3;
+		}
+		.enemy {
+			background: #0000ff; 
+			width: 35px;
+			height: 35px;
+			position: absolute;
+			z-index: 1;
+		}
+		.enemyHard {
+			background: lightcoral;
+			width: 40px;
+			height: 40px;
+			position: absolute;
+			z-index: 1;
+		}
+		#score {
+			color: #ffffff;
+			font-size: 18pt;
+			position: absolute;
+			left: 20px;
+			top: 20px;
+			z-index: 5;
+		}
+		#gameover {
+			color: #ff0000;
+			font-size: 18pt;
+			position: absolute;
+			left: 50px;
+			top: 200px;
+			visibility: hidden;
+			text-align: center;
+			z-index: 5;
+		}
+		#hardmodetext {
+			color: #ff0000;
+			font-size: 20pt;
+			font-family: Verdana, Arial, Helvetica, sans-serif;
+			position: absolute;
+			left: 90px;
+			top: 215px;
+			visibility: hidden;
+			text-align: center;
+			z-index: 5;
+		}
+		#welcometext {
+			border: 5px outset greenyellow;
+			background-color: lightskyblue;
+			text-align: center;
+			font-family: Verdana, Arial, Helvetica, sans-serif;
+			position: absolute;
+			width: 400px;
+			height: 400px;
+			left: 700px;
+			top: 100px;
+		}
+		#secret69 {
+			border: 4px solid #f4f4f4;
+			background-color: #ffffff;
+			text-align: center;
+			font-family: Verdana, Arial, Helvetica, sans-serif;
+			font-size: 6.9pt;
+			color: #dedede;
+			position: absolute;
+			width: 69px;
+			height: 69px;
+			left: 690px;
+			top: 6.9px;
+		}
+		#fillerbutton {
+			border: 1px solid #ffffff;
+			background-color: #ffffff;
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			left: 690px;
+			top: 0px;
+		}
+		.explosion1 {
+			background: #39ff14;
+			width: 18px;
+			height: 18px;
+			position: absolute;
+			transform: rotate(45deg);
+			z-index: 2;
+		}
+		.explosion2 {
+			background: #39ff14;
+			width: 7px;
+			height: 7px;
+			position: absolute;
+			z-index: 2;
+		}
+		#cooldownbar1 {
+			background: #b20000;
+			width: 40px;
+			height: 2px;
+			position: absolute;
+			visibility: hidden;
+			z-index: 3;
+		}
+		#cooldownbar2 {
+			background: #39ff14;
+			width: 40px;
+			height: 2px;
+			position: absolute;
+			visibility: hidden;
+			z-index: 3;
+		}
+	</style>
+</head>
+<body>
+	<div id='background'></div>
+	<div id='hero'></div>
+	<div id='laser'></div>
+	<div id='cooldownbar1'></div>
+	<div id='cooldownbar2'></div>
+	<div id='score'></div>
+	<button id='secret69' onclick='hardmode()'>helo</button>
+	<button id='fillerbutton'></button>
+	<div id='gameover'>
+		<h2>GAME OVER</h2>
+		<p>REFRESH PAGE TO RESTART GAME</p>
+	</div>
+	<div id='hardmodetext'><h2>HAVE FUN LOL</h2></div>
+	<div id='welcometext'>
+		<h2>LITTLE SHOOTER [1.1.0.4]</h2>
+		<p>Arrow keys or WASD to move. <br>
+		Press F to dash and teleport forward! <br>
+		Avoid getting hit by enemies! <br> <br>
+		Get the highest score you can! <br> 
+		Shoot enemies with SPACE! <br>
+		Hitting enemies gives you an extra shot! <br> <br>
+		Challenge your friends to beat your highscore! <br>
+		And most importantly... HAVE FUN!! <br> <br>
+		also my highscores are 22700 and 4169 so have fun tryin to beat me<br> <br>
+		and my friend david got 35200 >:D
+		</p>
+	</div>
+	<script>
+
+		const LEFT_KEY = 37;
+		const UP_KEY = 38;
+		const RIGHT_KEY = 39;
+		const DOWN_KEY = 40;
+		const SPACE_KEY = 32;
+		const W_KEY = 87;
+		const A_KEY = 65;
+		const S_KEY = 83;
+		const D_KEY = 68;
+		const F_KEY = 70;
+		const HERO_MOVEMENT = 3;
+
+		var lastLoopRun = 0;
+		var score = 0;
+		var iterations = 0;
+		var spaceKeyHeld = false;
+		var gameover = false;
+		var onLaptop = false;
+		var hardMode = false;
+
+		var controller = new Object();
+		var waiter = new Object();
+		var enemies = new Array();
+		var explosions = new Array();
+		var date = new Date();
+		var boom = new Audio('vine-boom.mp3');
+
+		function createSprite(element, x, y, w, h) {
+			var result = new Object();
+			result.element = element;
+			result.x = x;
+			result.y = y;
+			result.w = w;
+			result.h = h;
+			return result;
+		}
+
+		function toggleKey(keyCode, isPressed) {
+			//console.log(keyCode);
+			onLaptop = true;
+			if (keyCode == LEFT_KEY) {
+				controller.left = isPressed;
+			}
+			if (keyCode == A_KEY) {
+				controller.a = isPressed;
+			}
+			if (keyCode == UP_KEY) {
+				controller.up = isPressed;
+			}
+			if (keyCode == W_KEY) {
+				controller.w = isPressed;
+			}
+			if (keyCode == RIGHT_KEY) {
+				controller.right = isPressed;
+			}
+			if (keyCode == D_KEY) {
+				controller.d = isPressed;
+			}
+			if (keyCode == DOWN_KEY) {
+				controller.down = isPressed;
+			}
+			if (keyCode == S_KEY) {
+				controller.s = isPressed;
+			}
+			if (keyCode == SPACE_KEY) {
+				controller.space = isPressed;
+			}
+			if (keyCode == F_KEY) {
+				controller.dash = isPressed;
+			}
+		}
+
+		function handleControls() {
+			if (controller.up || controller.w) {
+				hero.y -= HERO_MOVEMENT;
+			}
+			if (controller.down || controller.s) {
+				hero.y += HERO_MOVEMENT;
+			}
+			if (controller.left || controller.a) {
+				hero.x -= HERO_MOVEMENT;
+			}
+			if (controller.right || controller.d) {
+				hero.x += HERO_MOVEMENT;
+			}
+			if (controller.space && laser.y <= 10 && spaceKeyHeld == false && !gameover) {
+				if (date.getDate() == 1 && date.getMonth() == 3) {
+					var boom = new Audio('vine-boom.mp3');
+					boom.play();
+				}
+				laser.x = hero.x + 8;
+				laser.y = hero.y - laser.h;	
+			}
+			if (controller.space) {
+				spaceKeyHeld = true;
+			} else {
+				spaceKeyHeld = false;
+			}
+			if (controller.dash && (waiter.dashCooldown == 0 || waiter.dashCooldown == null)) {
+				waiter.dashCooldown = 30;
+				waiter.coolDownBar = 30;
+				if ((controller.left || controller.a) && (controller.up || controller.w)) {
+					hero.x -= 25 * HERO_MOVEMENT;
+					hero.y -= 25 * HERO_MOVEMENT;
+				} else if ((controller.left || controller.a) && (controller.down || controller.s)) {
+					hero.x -= 25 * HERO_MOVEMENT;
+					hero.y += 25 * HERO_MOVEMENT;
+				} else if ((controller.right || controller.d) && (controller.up || controller.w)) {
+					hero.x += 25 * HERO_MOVEMENT;
+					hero.y -= 25 * HERO_MOVEMENT;
+				} else if ((controller.right || controller.d) && (controller.down || controller.s)) {
+					hero.x += 25 * HERO_MOVEMENT;
+					hero.y += 25 * HERO_MOVEMENT;
+				} else if (controller.left || controller.a) {
+					hero.x -= 30 * HERO_MOVEMENT;
+				} else if (controller.right || controller.d) {
+					hero.x += 30 * HERO_MOVEMENT;
+				} else if (controller.up || controller.w) {
+					hero.y -= 30 * HERO_MOVEMENT;
+				} else if (controller.down || controller.s) {
+					hero.y += 30 * HERO_MOVEMENT;
+				} else {
+					waiter.dashCooldown = 0;
+					waiter.coolDownBar = 0;
+				}
+			}
+			ensureBounds(hero);
+		}
+
+		function intersects(a, b) {
+			return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+		}
+
+		function center(lengthA, lengthB) {
+			return (lengthB - lengthA) / 2;
+		}
+
+		function ensureBounds(sprite, ignoreY) {
+			if (sprite.x < 20) {
+				sprite.x = 20;
+			}
+			if (!ignoreY && sprite.y < 20) {
+				sprite.y = 20;
+			}
+			if (sprite.x + sprite.w > 480) {
+				sprite.x = 480 - sprite.w;
+			}
+			if (!ignoreY && sprite.y + sprite.h > 480) {
+				sprite.y = 480 - sprite.h;
+			}
+		}
+
+		function setPosition(sprite) {
+			var e = document.getElementById(sprite.element);
+			e.style.left = sprite.x + 'px';
+			e.style.top = sprite.y + 'px';
+		}
+
+		function checkCollisions() {
+			for (var i = 0; i < enemies.length; i++) {
+				if (intersects(laser, enemies[i]) && !gameover) {
+					enemyExplode(enemies[i].element, enemies[i].x, enemies[i].y);
+					var element = document.getElementById(enemies[i].element);
+					element.style.visibilty = 'hidden';
+					element.parentNode.removeChild(element);
+					enemies.splice(i, 1);
+					i--;
+					laser.y = -laser.h - 200;
+					score += 100;
+				} else if (intersects(hero, enemies[i])) {
+					gameOver();
+				} else if (enemies[i].y + enemies[i].h >= 500) {
+					var element = document.getElementById(enemies[i].element);
+					element.style.visibilty = 'hidden';
+					element.parentNode.removeChild(element);
+					enemies.splice(i, 1);
+					i--;
+				}
+			}
+		}
+
+		function gameOver() {
+			gameover = true;
+			var element = document.getElementById(hero.element);
+			element.style.visibility = 'hidden';
+			element = document.getElementById(laser.element);
+			element.style.visibility = 'hidden';
+			element = document.getElementById(cooldownbar1.element);
+			element.style.visibility = 'hidden';
+			//element = document.getElementById(cooldownbar2.element);
+			//element.style.visibility = 'hidden';
+
+			element = document.getElementById('gameover');
+			if (!onLaptop) {
+				element.innerHTML = '<h2>GAME OVER</h2><p>THIS GAME IS NOT MOBILE FRIENDLY<br>DONT EVEN TRY LOL</p>'
+			}
+			if (date.getDate() == 1 && date.getMonth() == 3) {
+				element.innerHTML = '<h1>GIT PRANKed</h1>'
+			}
+			element.style.visibility = 'visible';
+		}
+
+		function showSprites() {
+			setPosition(hero);
+			setPosition(laser);
+			setPosition(cooldownbar1);
+			//setPosition(cooldownbar2);
+			for (var i = 0; i < enemies.length; i++) {
+				setPosition(enemies[i]);
+			}
+			for (var i = 0; i < explosions.length; i++) {
+				setPosition(explosions[i]);
+			}
+			var scoreElement = document.getElementById('score');
+			scoreElement.innerHTML = 'SCORE: ' + score;
+		}
+
+		function updatePositions() {
+			for (var i = 0; i < enemies.length; i++) {
+				if (hardMode) {
+					enemies[i].y += 6
+					enemies[i].x += getRandom(15) - 7;
+				} else {
+					enemies[i].y += 4;
+					enemies[i].x += getRandom(7) - 3;
+				}
+				ensureBounds(enemies[i], true);
+			}
+			if (!gameover && laser.y > -200) {
+				laser.y -= 12;
+			}
+			if (!gameover) {
+				cooldownbar1.x = hero.x - 10;
+				cooldownbar1.y = hero.y - 10;
+				//cooldownbar2.x = hero.x - 10;
+				//cooldownbar2.y = hero.y - 17;
+			}
+		}
+
+		function handleWaiter() {
+			var keys = Object.keys(waiter);
+			keys.forEach((key, index) => {
+				if (key.slice(0, 9) == 'explosion') {
+					if (waiter[key] == 1) {
+						var element = document.getElementById(key);
+						element.className = 'explosion2';
+						for (var i = 0; i < explosions.length; i++) {
+							if (document.getElementById(explosions[i].element).className = 'explosion2') {
+								if (hardMode) {
+									explosions[i].x += 5.5;
+									explosions[i].y += 5.5;
+								} else {
+									explosions[i].x += 6.5;
+									explosions[i].y += 6.5;
+								}
+								break;
+							}
+						}
+					} else if (waiter[key] == 0) {
+						var element = document.getElementById(key);
+						element.style.visibility = 'hidden';
+						element.parentNode.removeChild(element);
+						explosions.splice(0, 1);
+					}
+				} else if (key == 'hardmode' && waiter[key] == 0) {
+					var element = document.getElementById('hardmodetext');
+					element.style.visibility = 'hidden';
+				} else if (key == 'coolDownBar' && !gameover) {
+					if (waiter[key] == 30) {
+						cooldownbar1.w = 40;
+						var element = document.getElementById(cooldownbar1.element);
+						element.style.width = cooldownbar1.w + 'px';
+						element.style.visibility = 'visible';
+					} else if (waiter[key] == 24) {
+						cooldownbar1.w = 32;
+						var element = document.getElementById(cooldownbar1.element);
+						element.style.width = cooldownbar1.w + 'px';
+					} else if (waiter[key] == 18) {
+						cooldownbar1.w = 24;
+						var element = document.getElementById(cooldownbar1.element);
+						element.style.width = cooldownbar1.w + 'px';
+					} else if (waiter[key] == 12) {
+						cooldownbar1.w = 16;
+						var element = document.getElementById(cooldownbar1.element);
+						element.style.width = cooldownbar1.w + 'px';
+					} else if (waiter[key] == 6) {
+						cooldownbar1.w = 8;
+						var element = document.getElementById(cooldownbar1.element);
+						element.style.width = cooldownbar1.w + 'px';
+					} else if (waiter[key] == 0) {
+						var element = document.getElementById(cooldownbar1.element);
+						element.style.visibility = 'hidden';
+					}
+				}
+			})
+		}
+
+		function addEnemy() {
+			var interval = 50;
+			if (iterations > 1500) {
+				if (hardMode) {
+					interval = 3;
+				} else {
+					interval = 5;
+				}
+			} else if (iterations > 1000) {
+				if (hardMode) {
+					interval = 10;
+				} else {
+					interval = 20;
+				}
+			} else if (iterations > 500) {
+				if (hardMode) {
+					interval = 17;
+				} else {
+					interval = 35;
+				}
+			}
+			if (getRandom(interval) == 0) {
+				var elementName = 'enemy' + getRandom(1000000);
+				if (hardMode) {
+					var enemy = createSprite(elementName, getRandom(450), -40, 40, 40);
+				} else {
+					var enemy = createSprite(elementName, getRandom(450), -40, 35, 35);
+				}
+				var element = document.createElement('div');
+				element.id = enemy.element;
+				if (hardMode) {
+					element.className = 'enemyHard';
+				} else {
+					element.className = 'enemy';
+				}
+				document.children[0].appendChild(element);
+				enemies[enemies.length] = enemy;
+			}
+		}
+
+		function enemyExplode(enemyId, enemyX, enemyY) {
+			var elementName = 'explosion' + enemyId.substring(5);
+			if (hardMode) {
+				var explodeX = enemyX + 7;
+				var explodeY = enemyY + 7;
+			} else {
+				var explodeX = enemyX + 3;
+				var explodeY = enemyY + 3;
+			}
+			var explosion = createSprite(elementName, explodeX, explodeY, 16, 16);
+			var element = document.createElement('div');
+			element.id = explosion.element;
+			element.className = 'explosion1';
+			document.children[0].appendChild(element);
+			explosions[explosions.length] = explosion;
+			waiter [elementName] = 2;
+		}
+
+		function tickWaiter() {
+			var keys = Object.keys(waiter);
+			keys.forEach((key, index) => {
+				if (waiter[key] > 0) {
+					waiter[key] = waiter[key] - 1;
+				} else {
+					delete waiter[key];
+				}
+			})
+		}
+
+		function getRandom(maxSize) {
+			return parseInt(Math.random() * maxSize);
+		}
+
+		function hardmode() {
+			if (!gameover) {
+				score = 69;
+				iterations = 0;
+				hardMode = true;
+				for (var i = 0; i < enemies.length; i++) {
+					var element = document.getElementById(enemies[i].element);
+					element.style.visibilty = 'hidden';
+					element.parentNode.removeChild(element);
+					enemies.splice(i, 1);
+					i--;
+				}
+				waiter.hardmode = 20;
+				var element = document.getElementById('hardmodetext');
+				element.style.visibility = 'visible';
+			}
+			var element = document.getElementById('secret69');
+			element.style.visibility = 'hidden';
+			element.parentNode.removeChild(element);
+		}
+
+		function loop() {
+			if (new Date().getTime() - lastLoopRun > 40) {
+				tickWaiter();
+				handleControls();
+				updatePositions();
+				checkCollisions();
+				handleWaiter();
+
+				addEnemy();
+
+				showSprites();
+
+				lastLoopRun = new Date().getTime();
+				iterations++;
+			}
+			setTimeout('loop();', 2);
+		}
+
+		document.onkeydown = function(evt) {
+			toggleKey(evt.keyCode, true);
+		}
+		document.onkeyup = function(evt) {
+			toggleKey(evt.keyCode, false);
+		}
+
+		var hero = createSprite('hero', 250, 460, 20, 20);
+		var laser = createSprite('laser', 0, -120, 2, 50);
+		var cooldownbar1 = createSprite('cooldownbar1', 235, 470, 50, 2);
+		//var cooldownbar2 = createSprite('cooldownbar2', 235, 470, 50, 2);
+
+		loop();
+
+
+	</script>
+</body>
+</html> 
