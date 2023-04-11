@@ -1,3 +1,6 @@
+## [1.1.0.5] 11/4/2023
+Changed welcome text.
+Added temporary indicator for hard mode button. (remove next patch)
 ## [1.1.0.4} 7/4/2023
 General clean up of code.
 Changed welcome text.
