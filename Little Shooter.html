@@ -53,7 +53,7 @@
 			color: #ff0000;
 			font-size: 18pt;
 			position: absolute;
-			left: 50px;
+			left: 135px;
 			top: 200px;
 			visibility: hidden;
 			text-align: center;
@@ -161,6 +161,20 @@
 			left: 225px;
 			top: 240px;
 		}
+		#restart {
+			background: darkgoldenrod;
+			border: outset 8px gold;
+			font-size: 16pt;
+			font-family: Verdana, Arial, sans-serif;
+			color: lightyellow;
+			text-align: center;
+			width: 130px;
+			height: 60px;
+			position: absolute;
+			visibility: hidden;
+			left: 535px;
+			top: 220px;
+		}
 	</style>
 </head>
 <body>
@@ -172,17 +186,15 @@
 	<div id='score'></div>
 	<div id='dash'></div>
 	<button id='start' onclick='start()'>start</button>
+	<button id='restart' onclick="restart()">RESTART</button>
 	<div class='arrow' style='left: 762px; top: 14px;'><h3><<<</h3></div>
 	<div class='arrow' style='left: 654px; top: 14px;'><h3>>>></h3></div>
 	<button id='secret69' onclick='hardmode()'>hard mode</button>
 	<button id='fillerbutton'></button>
-	<div id='gameover'>
-		<h2>GAME OVER</h2>
-		<p>REFRESH PAGE TO RESTART GAME</p>
-	</div>
+	<div id='gameover'><h2>GAME OVER</h2></div>
 	<div id='hardmodetext'><h2>HARD MOD LOL</h2></div>
 	<div id='welcometext'>
-		<h2>LITTLE SHOOTER [1.1.0.7]</h2>
+		<h2>LITTLE SHOOTER [1.1.1.8]</h2>
 		<p>Arrow keys or WASD to move. <br>
 		Press F to dash and teleport forward! <br>
 		Avoid getting hit by enemies! <br> <br>
@@ -214,7 +226,7 @@
 		var iterations = 0;
 		var spaceKeyHeld = false;
 		var gameover = false;
-		//var onLaptop = false;
+		var onLaptop = false;
 		var hardMode = false;
 
 		var controller = new Object();
@@ -236,9 +248,9 @@
 
 		function toggleKey(keyCode, isPressed) {
 			//console.log(keyCode);
-			//if (onLaptop == false) {
-				//onLaptop = true;
-			//}
+			if (onLaptop == false) {
+				onLaptop = true;
+			}
 			if (keyCode == LEFT_KEY) {
 				controller.left = isPressed;
 			}
@@ -389,11 +401,12 @@
 			element.style.visibility = 'hidden';
 			//element = document.getElementById(cooldownbar2.element);
 			//element.style.visibility = 'hidden';
-
+			element = document.getElementById('restart');
+			element.style.visibility = 'visible';
 			element = document.getElementById('gameover');
-			//if (!onLaptop) {
-				//element.innerHTML = '<h2>GAME OVER</h2><p>THIS GAME IS NOT MOBILE FRIENDLY<br>DONT EVEN TRY LOL</p>'
-			//}
+			if (!onLaptop) {
+				element.innerHTML = '<h2>GAME OVER</h2><p>THIS GAME IS NOT MOBILE FRIENDLY<br>DONT EVEN TRY LOL</p>'
+			}
 			if (date.getDate() == 1 && date.getMonth() == 3) {
 				element.innerHTML = '<h1>GIT PRANKed</h1>'
 			}
@@ -465,7 +478,7 @@
 				} else if (key == 'hardmode' && waiter[key] == 0) {
 					var element = document.getElementById('hardmodetext');
 					element.style.visibility = 'hidden';
-				} else if (key == 'dashCooldown' && !gameover) {
+				} else if (key == 'dashCooldown') {
 					if (waiter[key] == 30) {
 						cooldownbar1.w = 40;
 						var element = document.getElementById(cooldownbar1.element);
@@ -586,12 +599,9 @@
 			}
 			element = document.getElementById('secret69');
 			element.style.visibility = 'hidden';
-			element.parentNode.removeChild(element);
 			element = document.getElementsByClassName('arrow');
-			for (var i = 0; i <= element.length && element[0] != null; i++) {
+			for (var i = 0; i < element.length; i++) {
 				element[i].style.visibility = 'hidden';
-				element[i].parentNode.removeChild(element[i]);
-				i--;
 			}
 		}
 
@@ -615,6 +625,37 @@
 		function start() {
 			setTimeout('loop();', 0);
 			setTimeout('initialise();', 3);
+		}
+
+		function restart() {
+			hero.x = 250;
+			hero.y = 460;
+			interval = 0;
+			score = 0;
+			hardMode = false;
+			gameover = false;
+			waiter.dashCooldown = 0;
+			for (var i = 0; i < enemies.length; i++) {
+				var element = document.getElementById(enemies[i].element);
+				element.style.visibilty = 'hidden';
+				element.parentNode.removeChild(element);
+				enemies.splice(i, 1);
+				i--;
+			}
+			element = document.getElementById('secret69');
+			element.style.visibility = 'visible';
+			element = document.getElementsByClassName('arrow');
+			for (var i = 0; i < element.length; i++) {
+				element[i].style.visibility = 'visible';
+			}
+			element = document.getElementById(hero.element);
+			element.style.visibility = 'visible';
+			element = document.getElementById(laser.element);
+			element.style.visibility = 'visible';
+			element = document.getElementById('gameover');
+			element.style.visibility = 'hidden';
+			element = document.getElementById('restart');
+			element.style.visibility = 'hidden';
 		}
 
 		function loop() {
@@ -653,9 +694,3 @@
 	</script>
 </body>
 </html> 
-
-
-
-
-
-
