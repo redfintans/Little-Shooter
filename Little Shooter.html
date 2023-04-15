@@ -7,6 +7,7 @@
 			width: 20px;
 			height: 20px;
 			position: absolute;
+			visibility: hidden;
 			z-index: 3;
 		}
 		#background {
@@ -23,6 +24,7 @@
 			width: 2px;
 			height: 50px;
 			position: absolute;
+			visibility: hidden;
 			z-index: 3;
 		}
 		.enemy {
@@ -87,6 +89,7 @@
 			font-size: bold 6.9pt;
 			color: #dedede;
 			position: absolute;
+			visibility: hidden;
 			width: 69px;
 			height: 69px;
 			left: 690px;
@@ -143,6 +146,20 @@
 		.arrow {
 			color: #ff0000;
 			position: absolute;
+			visibility: hidden;
+		}
+		#start {
+			color: #dedede;
+			position: absolute;
+			background: #555555;
+			border: outset 5px whitesmoke;
+			font-size: 13pt;
+			font-family: Verdana, Arial, sans-serif;
+			text-align: center;
+			width: 70px;
+			height: 40px;
+			left: 225px;
+			top: 240px;
 		}
 	</style>
 </head>
@@ -154,8 +171,9 @@
 	<div id='cooldownbar2'></div>
 	<div id='score'></div>
 	<div id='dash'></div>
-	<div class="arrow" style='left: 762px; top: 14px;'><h3><<<</h3></div>
-	<div class="arrow" style='left: 654px; top: 14px;'><h3>>>></h3></div>
+	<button id='start' onclick='start()'>start</button>
+	<div class='arrow' style='left: 762px; top: 14px;'><h3><<<</h3></div>
+	<div class='arrow' style='left: 654px; top: 14px;'><h3>>>></h3></div>
 	<button id='secret69' onclick='hardmode()'>hard mode</button>
 	<button id='fillerbutton'></button>
 	<div id='gameover'>
@@ -164,7 +182,7 @@
 	</div>
 	<div id='hardmodetext'><h2>HARD MOD LOL</h2></div>
 	<div id='welcometext'>
-		<h2>LITTLE SHOOTER [1.1.0.6]</h2>
+		<h2>LITTLE SHOOTER [1.1.0.7]</h2>
 		<p>Arrow keys or WASD to move. <br>
 		Press F to dash and teleport forward! <br>
 		Avoid getting hit by enemies! <br> <br>
@@ -173,8 +191,8 @@
 		Hitting enemies gives you an extra shot! <br> <br>
 		Challenge your friends to beat your highscore! <br>
 		And most importantly... HAVE FUN!! <br> <br>
-		also my highscores are 22700 and 5469 so have fun tryin to beat me <br> <br> 
-		and my friend david got 37000 >:D
+		also my highscores are 22700 and 5469 <br> <br> 
+		and my friend david got 64200 and 18369 >:D
 		</p>
 	</div>
 	<script>
@@ -196,7 +214,7 @@
 		var iterations = 0;
 		var spaceKeyHeld = false;
 		var gameover = false;
-		var onLaptop = false;
+		//var onLaptop = false;
 		var hardMode = false;
 
 		var controller = new Object();
@@ -218,9 +236,9 @@
 
 		function toggleKey(keyCode, isPressed) {
 			//console.log(keyCode);
-			if (onLaptop == false) {
-				onLaptop = true;
-			}
+			//if (onLaptop == false) {
+				//onLaptop = true;
+			//}
 			if (keyCode == LEFT_KEY) {
 				controller.left = isPressed;
 			}
@@ -373,9 +391,9 @@
 			//element.style.visibility = 'hidden';
 
 			element = document.getElementById('gameover');
-			if (!onLaptop) {
-				element.innerHTML = '<h2>GAME OVER</h2><p>THIS GAME IS NOT MOBILE FRIENDLY<br>DONT EVEN TRY LOL</p>'
-			}
+			//if (!onLaptop) {
+				//element.innerHTML = '<h2>GAME OVER</h2><p>THIS GAME IS NOT MOBILE FRIENDLY<br>DONT EVEN TRY LOL</p>'
+			//}
 			if (date.getDate() == 1 && date.getMonth() == 3) {
 				element.innerHTML = '<h1>GIT PRANKed</h1>'
 			}
@@ -569,12 +587,34 @@
 			element = document.getElementById('secret69');
 			element.style.visibility = 'hidden';
 			element.parentNode.removeChild(element);
-			element = document.getElementsByClassName("arrow");
+			element = document.getElementsByClassName('arrow');
 			for (var i = 0; i <= element.length && element[0] != null; i++) {
-				element[i].style.visibility = "hidden";
+				element[i].style.visibility = 'hidden';
 				element[i].parentNode.removeChild(element[i]);
 				i--;
 			}
+		}
+
+		function initialise() {
+			var element = document.getElementById('hero');
+			element.style.visibility = 'visible';
+			element = document.getElementById('laser');
+			element.style.visibility = 'visible';
+			element = document.getElementById('secret69');
+			element.style.visibility = 'visible';
+			element = document.getElementsByClassName('arrow');
+			for (var i = 0; i < element.length; i++) {
+				console.log('hello');
+				element[i].style.visibility = 'visible';
+			}
+			element = document.getElementById('start');
+			element.style.visibility = 'hidden';
+			element.parentNode.removeChild(element);
+		}
+
+		function start() {
+			setTimeout('loop();', 0);
+			setTimeout('initialise();', 3);
 		}
 
 		function loop() {
@@ -606,8 +646,8 @@
 		var laser = createSprite('laser', 0, -120, 2, 50);
 		var cooldownbar1 = createSprite('cooldownbar1', 235, 470, 50, 2);
 		//var cooldownbar2 = createSprite('cooldownbar2', 235, 470, 50, 2)
-			
-		loop();
+		
+		//loop()
 
 
 	</script>
