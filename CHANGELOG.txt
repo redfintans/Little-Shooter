@@ -1,3 +1,5 @@
+## [1.1.1.8] 15/4/23
+Added restart button.
 ## [1.1.0.7] 15/4/23
 Changed welcome text.
 Added start button that must be clicked before game starts.
