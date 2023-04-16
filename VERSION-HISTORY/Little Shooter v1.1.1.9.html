@@ -184,7 +184,7 @@
 	<div id='gameover'><h2>GAME OVER</h2></div>
 	<div id='hardmodetext'><h2>HARD MOD LOL</h2></div>
 	<div id='welcometext'>
-		<h2>LITTLE SHOOTER [1.1.1.8]</h2>
+		<h2>LITTLE SHOOTER [1.1.1.9]</h2>
 		<p>Arrow keys or WASD to move. <br>
 		Press F to dash and teleport forward! <br>
 		Avoid getting hit by enemies! <br> <br>
@@ -469,7 +469,7 @@
 				} else if (key == 'hardmode' && waiter[key] == 0) {
 					var element = document.getElementById('hardmodetext');
 					element.style.visibility = 'hidden';
-				} else if (key == 'dashCooldown') {
+				} else if (key == 'dashCooldown' && !gameover) {
 					if (waiter[key] == 30) {
 						cooldownbar1.w = 40;
 						var element = document.getElementById(cooldownbar1.element);
