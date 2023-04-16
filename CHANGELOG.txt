@@ -1,3 +1,10 @@
+## [1.1.1.9] 16/4/23
+Fixed bug causing enemies to flood immediately after restarting.
+Changed speed of enemy spawns.
+Removed secret filler button.
+Fixed bug causing game over text for mobile players to be displaced.
+Fixed bug causing cooldown bar to not reset properly.
+Fixed bug causing graphic glitches on restarting.
 ## [1.1.1.8] 15/4/23
 Added restart button.
 ## [1.1.0.7] 15/4/23
@@ -5,6 +12,7 @@ Changed welcome text.
 Added start button that must be clicked before game starts.
 ## [1.1.0.6] 14/4/23
 Changed hard mode button appearance.
+Removed temporary indicator.
 Changed welcome text.
 ## [1.1.0.5] 11/4/2023
 Changed welcome text.
@@ -35,6 +43,7 @@ Added enemy death animation.
 ## [1.0.1.4] 27/3/2023
 Fixed bug causing teleport dash to go on cooldown even after failing.
 Added secret joke button that gives 69 points.
+Added secret filler button that does nothing.
 Fixed bug causing laptop users to be called mobile users.
 Changed welcome text.
 ## [1.0.0.3] 26/3/2023
