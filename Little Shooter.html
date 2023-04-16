@@ -737,6 +737,9 @@
 			toggleKey(evt.keyCode, true);
 		}
 		document.onkeyup = function(evt) {
+			if (evt.keyCode === 32) {
+				evt.preventDefault();
+			}
 			toggleKey(evt.keyCode, false);
 		}
 
