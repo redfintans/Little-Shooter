@@ -49,7 +49,7 @@ Changed welcome text.
 ## [1.0.0.3] 26/3/2023
 Fixed graphic bug causing bullets to shoot in such quick succession they appear to pierce enemies.
 Fixed bug allowing players to press and hold space and spam shoot.
-Fixed bug causing to keep moving offscreen potentially causing performance issues.
+Fixed bug causing bullet to keep moving offscreen potentially causing performance issues.
 ## [1.0.0.2] 25/3/2023
 Added secret game over screen for mobile players.
 Fixed bug causing bullet to kill offscreen enemies with similar y values to killed enemies.
