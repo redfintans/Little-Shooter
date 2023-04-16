@@ -95,15 +95,6 @@
 			left: 690px;
 			top: 6.9px;
 		}
-		#fillerbutton {
-			border: 1px solid #ffffff;
-			background-color: #ffffff;
-			position: absolute;
-			width: 1px;
-			height: 1px;
-			left: 690px;
-			top: 0px;
-		}
 		.explosion1 {
 			background: #39ff14;
 			width: 18px;
@@ -190,7 +181,6 @@
 	<div class='arrow' style='left: 762px; top: 14px;'><h3><<<</h3></div>
 	<div class='arrow' style='left: 654px; top: 14px;'><h3>>>></h3></div>
 	<button id='secret69' onclick='hardmode()'>hard mode</button>
-	<button id='fillerbutton'></button>
 	<div id='gameover'><h2>GAME OVER</h2></div>
 	<div id='hardmodetext'><h2>HARD MOD LOL</h2></div>
 	<div id='welcometext'>
@@ -234,7 +224,6 @@
 		var enemies = new Array();
 		var explosions = new Array();
 		var date = new Date();
-		var boom = new Audio('vine-boom.mp3');
 
 		function createSprite(element, x, y, w, h) {
 			var result = new Object();
@@ -406,9 +395,11 @@
 			element = document.getElementById('gameover');
 			if (!onLaptop) {
 				element.innerHTML = '<h2>GAME OVER</h2><p>THIS GAME IS NOT MOBILE FRIENDLY<br>DONT EVEN TRY LOL</p>'
+				element.style.left = '50px';
 			}
 			if (date.getDate() == 1 && date.getMonth() == 3) {
 				element.innerHTML = '<h1>GIT PRANKed</h1>'
+				element.style.left = '50px';
 			}
 			element.style.visibility = 'visible';
 		}
@@ -505,28 +496,28 @@
 						element.style.visibility = 'hidden';
 					}
 				}
-			})
+			});
 		}
 
 		function addEnemy() {
 			var interval = 50;
-			if (iterations > 1500) {
+			if (iterations > 800) {
 				if (hardMode) {
 					interval = 3;
 				} else {
 					interval = 5;
 				}
-			} else if (iterations > 1000) {
+			} else if (iterations > 500) {
 				if (hardMode) {
 					interval = 10;
 				} else {
-					interval = 20;
+					interval = 15;
 				}
-			} else if (iterations > 500) {
+			} else if (iterations > 250) {
 				if (hardMode) {
 					interval = 17;
 				} else {
-					interval = 35;
+					interval = 28;
 				}
 			}
 			if (getRandom(interval) == 0) {
@@ -574,7 +565,7 @@
 				} else {
 					delete waiter[key];
 				}
-			})
+			});
 		}
 
 		function getRandom(maxSize) {
@@ -617,6 +608,10 @@
 				console.log('hello');
 				element[i].style.visibility = 'visible';
 			}
+			element = document.getElementById('gameover');
+			element.style.visibility = 'hidden';
+			element = document.getElementById('restart');
+			element.style.visibility = 'hidden';
 			element = document.getElementById('start');
 			element.style.visibility = 'hidden';
 			element.parentNode.removeChild(element);
@@ -630,11 +625,15 @@
 		function restart() {
 			hero.x = 250;
 			hero.y = 460;
-			interval = 0;
+			laser.y = -200;
+			iterations = 0;
 			score = 0;
 			hardMode = false;
 			gameover = false;
-			waiter.dashCooldown = 0;
+			var keys = Object.keys(waiter);
+			keys.forEach((key, index) => {
+				delete waiter[key];
+			});
 			for (var i = 0; i < enemies.length; i++) {
 				var element = document.getElementById(enemies[i].element);
 				element.style.visibilty = 'hidden';
@@ -642,20 +641,7 @@
 				enemies.splice(i, 1);
 				i--;
 			}
-			element = document.getElementById('secret69');
-			element.style.visibility = 'visible';
-			element = document.getElementsByClassName('arrow');
-			for (var i = 0; i < element.length; i++) {
-				element[i].style.visibility = 'visible';
-			}
-			element = document.getElementById(hero.element);
-			element.style.visibility = 'visible';
-			element = document.getElementById(laser.element);
-			element.style.visibility = 'visible';
-			element = document.getElementById('gameover');
-			element.style.visibility = 'hidden';
-			element = document.getElementById('restart');
-			element.style.visibility = 'hidden';
+			setTimeout('initialise();', 41);
 		}
 
 		function loop() {
