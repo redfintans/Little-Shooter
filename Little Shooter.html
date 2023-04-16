@@ -166,6 +166,40 @@
 			left: 535px;
 			top: 220px;
 		}
+		#credits {
+			border: 5px outset blueviolet;
+			background-color: lightgoldenrodyellow;
+			text-align: center;
+			font-family: Verdana, Arial, Helvetica, sans-serif;
+			font-size: 8.8pt;
+			position: absolute;
+			visibility: hidden;
+			width: 400px;
+			height: 400px;
+			left: 700px;
+			top: 100px;
+		}
+		#logo {
+			position: absolute;
+			width: 109px;
+			height: 109px;
+			border: 5px outset gold;
+			background-image: url(RESOURCES/logo.png);
+			background-repeat: no-repeat;
+			image-resolution: 1080p;
+			left: 510px;
+			top: 10px;
+			z-index: 10;
+		}
+		#fillerbutton {
+			border: 1px solid #000000;
+			background-color: #000000;
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			left: 1px;
+			top: 0px;
+		}
 	</style>
 </head>
 <body>
@@ -176,6 +210,8 @@
 	<div id='cooldownbar2'></div>
 	<div id='score'></div>
 	<div id='dash'></div>
+	<button id='fillerbutton'></button>
+	<button id='logo' onclick='credits()'></button>
 	<button id='start' onclick='start()'>start</button>
 	<button id='restart' onclick="restart()">RESTART</button>
 	<div class='arrow' style='left: 762px; top: 14px;'><h3><<<</h3></div>
@@ -184,17 +220,35 @@
 	<div id='gameover'><h2>GAME OVER</h2></div>
 	<div id='hardmodetext'><h2>HARD MOD LOL</h2></div>
 	<div id='welcometext'>
-		<h2>LITTLE SHOOTER [1.1.1.9]</h2>
-		<p>Arrow keys or WASD to move. <br>
-		Press F to dash and teleport forward! <br>
-		Avoid getting hit by enemies! <br> <br>
-		Get the highest score you can! <br> 
-		Shoot enemies with SPACE! <br>
-		Hitting enemies gives you an extra shot! <br> <br>
-		Challenge your friends to beat your highscore! <br>
-		And most importantly... HAVE FUN!! <br> <br>
-		also my highscores are 22700 and 5469 <br> <br> 
-		and my friend david got 64200 and 18369 >:D
+		<h2> LITTLE SHOOTER [1.1.1.10] </h2>
+		<p>
+			Arrow keys or WASD to move. <br>
+			Press F to dash and teleport forward! <br>
+			Avoid getting hit by enemies! <br> <br>
+			Get the highest score you can! <br> 
+			Shoot enemies with SPACE! <br>
+			Hitting enemies gives you an extra shot! <br> <br>
+			Challenge your friends to beat your highscore! <br>
+			And most importantly... HAVE FUN!! <br> <br>
+			also my highscores are 22700 and 5469 <br> <br> 
+			and my friend david got 64200 and 18369 >:D
+		</p>
+	</div>
+	<div id='credits'>
+		<h1>CREDITS</h1>
+		<p>
+			This is a list of people who helped in the production of this little game of mine. <br> <br>
+			<b> <u> CODE </u> </b> <br>
+			The person who wrote the code <br>
+			<b> Adrien <br> (JUST ME LOL) </b> <br> <br>
+			<b> <u> PLAYTESTING </u> </b> <br>
+			The people who had fun gaming and gave me their input <br>
+			<b> David, Qi Rong <br> Jayden, Yi Jun </b> <br> <br>
+			<b> <u> SUGGESTIONS </u> </b> <br>
+			The people who looked and said "whoa what if XXX was in the game?" <br>
+			<b> David, Jayden, Qi Rong <br> Mr Khoo, 戴老师, Marcus </b> <br> <br>
+			<b> <u> AND OF COURSE, YOU! </u> </b> <br>
+			Due to the nature of this game, you are probably already credited, but heres a <b> HUGE THANKS ANYWAY </b> for playing my game!! 
 		</p>
 	</div>
 	<script>
@@ -287,7 +341,7 @@
 			}
 			if (controller.space && laser.y <= 10 && spaceKeyHeld == false && !gameover) {
 				if (date.getDate() == 1 && date.getMonth() == 3) {
-					var boom = new Audio('vine-boom.mp3');
+					var boom = new Audio('RESOURCES/vine-boom.mp3');
 					boom.play();
 				}
 				laser.x = hero.x + 8;
@@ -642,6 +696,23 @@
 				i--;
 			}
 			setTimeout('initialise();', 41);
+		}
+
+		function credits() {
+			var element = document.getElementById('welcometext');
+			console.log(element.style.visibility);
+			if (element.style.visibility == 'visible') {
+				element.style.visibility = 'hidden';
+			} else if (element.style.visibility == 'hidden') {
+				element.style.visibility = 'visible';
+			}
+			element = document.getElementById('credits');
+			console.log(element.style.visibility);
+			if (element.style.visibility == 'visible') {
+				element.style.visibility = 'hidden';
+			} else {
+				element.style.visibility = 'visible';
+			}
 		}
 
 		function loop() {
