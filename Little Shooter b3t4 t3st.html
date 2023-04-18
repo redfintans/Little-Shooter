@@ -805,7 +805,9 @@
 		
 		//loop()
 
-		document.cookie = 'highscore=69';
+		if (getCookie('highscore') == 0) {
+			setCookie('highscore', 0, 365);
+		}
 		console.log(document.cookie);
 
 	</script>
