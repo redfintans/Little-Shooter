@@ -724,6 +724,9 @@
 			var highscore = 69;
 			setCookie('highscore', highscore, 365);
 			element.innerHTML = 'HIGHSCORE: ' + getCookie('highscore') + '<br>HARDSCORE: ';
+			if (getCookie('highscore') == 0) {
+				setCookie('highscore', 0, 365);
+			}
 		}
 
 		function start() {
@@ -805,10 +808,6 @@
 		
 		//loop()
 
-		if (getCookie('highscore') == 0) {
-			setCookie('highscore', 0, 365);
-		}
-		console.log(document.cookie);
 
 	</script>
 </body>
