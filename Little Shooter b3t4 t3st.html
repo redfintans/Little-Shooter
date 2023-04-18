@@ -721,7 +721,6 @@
 			element = document.getElementById('start');
 			element.style.visibility = 'hidden';
 			element = document.getElementById('highscore');
-			var highscore = 69;
 			setCookie('highscore', highscore, 365);
 			element.innerHTML = 'HIGHSCORE: ' + getCookie('highscore') + '<br>HARDSCORE: ';
 			if (getCookie('highscore') == 0) {
