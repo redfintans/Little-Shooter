@@ -433,7 +433,7 @@
  			if (highscore < score) {
 				var element = document.getElementById('highscore');
 				if (parseInt(score.toString().slice(-2)) == '00') {
-					setCookie("highscore", highscore, 365);
+					setCookie("highscore", score, 365);
 					element.innerHTML = 'HIGHSCORE: ' + score + element.innerHTML.slice(-15);
 					console.log(element.innerHTML);
 				}
