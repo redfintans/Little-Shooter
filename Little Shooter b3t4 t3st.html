@@ -405,7 +405,7 @@
 			console.log(d.toUTCString());
   			let expires = "expires=" + (d.toUTCString());
 			console.log(expires);
-  			document.cookie = cname + "=" + cvalue.toString() + ";" + expires + ";path=C:\Users\T0907960I\Documents\Little Shooter.html;";
+  			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;";
 			console.log('set success ' + document.cookie);
 		}
 
@@ -414,13 +414,13 @@
   			let ca = document.cookie.split(';');
 			//console.log(ca);
   			for(let i = 0; i < ca.length; i++) {
-    				let c = ca[i];
-    				while (c.charAt(0) == ' ') {
-      					c = c.substring(1);
-    				}
-    				if (c.indexOf(name) == 0) {
-      					return c.substring(name.length, c.length);
-    				}
+				let c = ca[i];
+				while (c.charAt(0) == ' ') {
+						c = c.substring(1);
+					}
+					if (c.indexOf(name) == 0) {
+	  					return c.substring(name.length, c.length);
+					}
   			}
   			return "";
 		}
@@ -431,9 +431,9 @@
 			highscore = 0;
 			console.log(highscore);
  			if (highscore < score) {
-      				setCookie("highscore", highscore, 365);
 				var element = document.getElementById('highscore');
-				if (parseInt(score.toString().slice(-2)) == 00) {
+				if (parseInt(score.toString().slice(-2)) == '00') {
+					setCookie("highscore", highscore, 365);
 					element.innerHTML = 'HIGHSCORE: ' + score + element.innerHTML.slice(-15);
 					console.log(element.innerHTML);
 				}
@@ -722,7 +722,7 @@
 			element.style.visibility = 'hidden';
 			element = document.getElementById('highscore');
 			element.innerHTML = 'HIGHSCORE: ' + getCookie('highscore') + '<br>HARDSCORE: ';
-			if (getCookie('highscore') == 0) {
+			if (getCookie('highscore') == '') {
 				setCookie('highscore', 0, 365);
 			}
 		}
@@ -810,3 +810,5 @@
 	</script>
 </body>
 </html> 
+
+
