@@ -428,7 +428,7 @@
 
 		function highScore() {
   			//var highscore = parseInt(getCookie("highscore"));
-			highscore = 0;
+			highscore = getCookie('highscore');
 			console.log(highscore);
  			if (highscore < score) {
 				var element = document.getElementById('highscore');
