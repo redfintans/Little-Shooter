@@ -736,6 +736,7 @@
 				setCookie('highscore', 0, 365);
 			}
 			element = document.getElementById('highscore');
+			element.style.visibility = 'visible';
 			element.innerHTML = 'HIGHSCORE: ' + getCookie('highscore');
 		}
 
