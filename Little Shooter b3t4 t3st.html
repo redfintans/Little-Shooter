@@ -208,6 +208,14 @@
 			top: 515px;
 			z-index: 5;
 		}
+		#hardscore {
+			color: #000000;
+			font-size: 18pt;
+			position: absolute;
+			left: 20px;
+			top: 545px;
+			z-index: 5;
+		}
 	</style>
 </head>
 <body>
@@ -219,6 +227,7 @@
 	<div id='score'></div>
 	<div id='dash'></div>
 	<div id='highscore'></div>
+	<div id='hardscore'></div>
 	<button id='fillerbutton'></button>
 	<button id='logo' onclick='credits()'></button>
 	<button id='start' onclick='start()'>start</button>
@@ -229,7 +238,7 @@
 	<div id='gameover'><h2>GAME OVER</h2></div>
 	<div id='hardmodetext'><h2>HARD MOD LOL</h2></div>
 	<div id='welcometext'>
-		<h2> LITTLE SHOOTER [1.1.1.11] </h2>
+		<h2> LITTLE SHOOTER [1.1.2.0] </h2>
 		<p>
 			Arrow keys or WASD to move. <br>
 			Press F to dash and teleport forward! <br>
@@ -402,17 +411,13 @@
 		function setCookie(cname, cvalue, exdays) {
   			var d = new Date();
   			d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-			console.log(d.toUTCString());
-  			let expires = "expires=" + (d.toUTCString());
-			console.log(expires);
+  			let expires = "expires=" + d.toUTCString();
   			document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/;";
-			console.log('set success ' + document.cookie);
 		}
 
 		function getCookie(cname) {
   			let name = cname + "=";
   			let ca = document.cookie.split(';');
-			//console.log(ca);
   			for(let i = 0; i < ca.length; i++) {
 				let c = ca[i];
 				while (c.charAt(0) == ' ') {
@@ -427,15 +432,17 @@
 
 
 		function highScore() {
-  			//var highscore = parseInt(getCookie("highscore"));
 			highscore = getCookie('highscore');
-			console.log(highscore);
  			if (highscore < score) {
-				var element = document.getElementById('highscore');
 				if (parseInt(score.toString().slice(-2)) == '00') {
+					var element = document.getElementById('highscore');
 					setCookie("highscore", score, 365);
-					element.innerHTML = 'HIGHSCORE: ' + score + element.innerHTML.slice(-15);
+					element.innerHTML = 'HIGHSCORE: ' + score;
 					console.log(element.innerHTML);
+				} else if (parseInt(score.toString().slice(-2)) == '69') {
+					var element = document.getElementById('hardscore');
+					setCookie("hardscore", score, 365);
+					element.innerHTML = 'HARDSCORE: ' + score;
 				}
 			}
 		}
@@ -701,6 +708,11 @@
 			for (var i = 0; i < element.length; i++) {
 				element[i].style.visibility = 'hidden';
 			}
+			if (getCookie('hardscore') == '') {
+				setCookie('hardscore', 0, 365);
+				element = document.getElementById('hardscore');
+				element.innerHTML = 'HARDSCORE: ' + getCookie('hardscore');
+			}
 		}
 
 		function initialise() {
@@ -720,10 +732,10 @@
 			element.style.visibility = 'hidden';
 			element = document.getElementById('start');
 			element.style.visibility = 'hidden';
-			element = document.getElementById('highscore');
-			element.innerHTML = 'HIGHSCORE: ' + getCookie('highscore') + '<br>HARDSCORE: ';
 			if (getCookie('highscore') == '') {
 				setCookie('highscore', 0, 365);
+				element = document.getElementById('highscore');
+				element.innerHTML = 'HIGHSCORE: ' + getCookie('highscore');
 			}
 		}
 
@@ -756,14 +768,12 @@
 
 		function credits() {
 			var element = document.getElementById('welcometext');
-			console.log(element.style.visibility);
 			if (element.style.visibility == 'visible') {
 				element.style.visibility = 'hidden';
 			} else if (element.style.visibility == 'hidden') {
 				element.style.visibility = 'visible';
 			}
 			element = document.getElementById('credits');
-			console.log(element.style.visibility);
 			if (element.style.visibility == 'visible') {
 				element.style.visibility = 'hidden';
 			} else {
