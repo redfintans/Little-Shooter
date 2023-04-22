@@ -431,20 +431,18 @@
   			return "";
 		}
 
-
 		function highScore() {
 			highscore = getCookie('highscore');
- 			if (highscore < score) {
-				if (parseInt(score.toString().slice(-2)) == '00') {
-					var element = document.getElementById('highscore');
-					setCookie("highscore", score, 365);
-					element.innerHTML = 'HIGHSCORE: ' + score;
-					console.log(element.innerHTML);
-				} else if (parseInt(score.toString().slice(-2)) == '69') {
-					var element = document.getElementById('hardscore');
-					setCookie("hardscore", score, 365);
-					element.innerHTML = 'HARDSCORE: ' + score;
-				}
+			hardscore = getCookie('hardscore');
+ 			if (highscore < score && parseInt(score.toString().slice(-2)) == '00') {
+				var element = document.getElementById('highscore');
+				setCookie("highscore", score, 365);
+				element.innerHTML = 'HIGHSCORE: ' + score;
+			}
+			if (hardscore < score && parseInt(score.toString().slice(-2)) == '69') {
+				var element = document.getElementById('hardscore');
+				setCookie("hardscore", score, 365);
+				element.innerHTML = 'HARDSCORE: ' + score;
 			}
 		}
 
