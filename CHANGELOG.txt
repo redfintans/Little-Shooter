@@ -1,15 +1,18 @@
-## [1.1.1.10] 16/4/23
+## [1.1.2.0] 22/4/23
+Added highscore tracker.
+Fixed bug causing repeated game over after dying. (no visible consequences)
+## [1.1.1.2] 16/4/23
 Added credits.
 Added logo.
 Added back filler button that does nothing.
-## [1.1.1.9] 16/4/23
+## [1.1.1.1] 16/4/23
 Fixed bug causing enemies to flood immediately after restarting.
 Changed speed of enemy spawns.
 Removed filler button.
 Fixed bug causing game over text for mobile players to be displaced.
 Fixed bug causing cooldown bar to not reset properly.
 Fixed bug causing graphic glitches on restarting.
-## [1.1.1.8] 15/4/23
+## [1.1.1.0] 15/4/23
 Added restart button.
 ## [1.1.0.7] 15/4/23
 Changed welcome text.
@@ -35,16 +38,16 @@ Added April fool's day text that activates every April 1st.
 ## [1.1.0.1] 1/4/23
 Added April fool's day joke that activates every April 1st.
 ## [1.1.0.0] 30/3/23
-Fixed bug causing up and w (and etc.) to be incompatible.
+Fixed bug causing up and w together (and etc.) to be incompatible.
 Added large hardmode rework.
 Changed welcome text.
-## [1.0.3.6] 29/3/2023
+## [1.0.3.0] 29/3/2023
 Fixed layering issues.
 Added hardmode to secret button.
-## [1.0.2.5] 28/3/2023
+## [1.0.2.0] 28/3/2023
 General clean up of code.
 Added enemy death animation.
-## [1.0.1.4] 27/3/2023
+## [1.0.1.0] 27/3/2023
 Fixed bug causing teleport dash to go on cooldown even after failing.
 Added secret joke button that gives 69 points.
 Added filler button that does nothing.
@@ -53,7 +56,7 @@ Changed welcome text.
 ## [1.0.0.3] 26/3/2023
 Fixed graphic bug causing bullets to shoot in such quick succession they appear to pierce enemies.
 Fixed bug allowing players to press and hold space and spam shoot.
-Fixed bug causing bullet to keep moving offscreen potentially causing performance issues.
+Fixed bug causing bullet to keep moving offscreen potentially causing performance issues. (no visible consequences)
 ## [1.0.0.2] 25/3/2023
 Added secret game over screen for mobile players.
 Fixed bug causing bullet to kill offscreen enemies with similar y values to killed enemies.
