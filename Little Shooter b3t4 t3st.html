@@ -734,9 +734,9 @@
 			element.style.visibility = 'hidden';
 			if (getCookie('highscore') == '') {
 				setCookie('highscore', 0, 365);
-				element = document.getElementById('highscore');
-				element.innerHTML = 'HIGHSCORE: ' + getCookie('highscore');
 			}
+			element = document.getElementById('highscore');
+			element.innerHTML = 'HIGHSCORE: ' + getCookie('highscore');
 		}
 
 		function start() {
