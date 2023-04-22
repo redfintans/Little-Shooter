@@ -1,8 +1,11 @@
+## [1.1.2.2] 22/4/23
+Fixed bug causing hardscore not to update when highscore is too high and vice versa.
+Changed highscore and hardscore to update every frame.
 ## [1.1.2.1] 22/4/23
-Fixed bug causing highscore tracker to be invisible until getting a new high score.
+Fixed bug causing highscore and hardscore trackers to be invisible until getting a new high score.
 Changed welcome text.
 ## [1.1.2.0] 22/4/23
-Added highscore tracker.
+Added highscore and hardscore tracker.
 Fixed bug causing repeated game over after dying. (no visible consequences)
 ## [1.1.1.2] 16/4/23
 Added credits.
