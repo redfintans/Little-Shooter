@@ -126,13 +126,18 @@
 			visibility: hidden;
 			z-index: 3;
 		}
-		#dash {
+		.dash1 {
 			border: dotted 2px #ff0000;
 			width: 18px;
 			height: 18px;
 			position: absolute;
-			visibility: hidden;
 			z-index: 1;
+		}
+		.dash2 {
+			border: dotted 2px #ff000067;
+			width: 30px;
+			height: 30px;
+			position: absolute;
 		}
 		.arrow {
 			color: #ff0000;
@@ -225,7 +230,7 @@
 	<div id='cooldownbar1'></div>
 	<div id='cooldownbar2'></div>
 	<div id='score'></div>
-	<div id='dash'></div>
+	<div id='dash' class='dash1' style='visibility: hidden;'></div>
 	<div id='highscore'></div>
 	<div id='hardscore'></div>
 	<button id='fillerbutton'></button>
@@ -238,7 +243,7 @@
 	<div id='gameover'><h2>GAME OVER</h2></div>
 	<div id='hardmodetext'><h2>HARD MOD LOL</h2></div>
 	<div id='welcometext'>
-		<h2> LITTLE SHOOTER [1.1.2.2] </h2>
+		<h2> LITTLE SHOOTER [1.1.3.0] </h2>
 		<p>
 			Arrow keys or WASD to move. <br>
 			Press F to dash and teleport forward! <br>
@@ -248,9 +253,9 @@
 			Hitting enemies gives you an extra shot! <br> <br>
 			Challenge your friends to beat your highscore! <br>
 			And most importantly... HAVE FUN!! <br> <br>
-			also my highscores are 22700 and 5469 <br> <br> 
+			also my highscores are 22700 and 8669 <br> <br> 
 			and my friend david got 64200 and 18369 >:D <br> <br>
-			btw this site now uses cookies
+			btw this site now uses cookies ;-;
 		</p>
 	</div>
 	<div id='credits'>
@@ -262,12 +267,12 @@
 			<b> Adrien <br> (JUST ME LOL) </b> <br> <br>
 			<b> <u> PLAYTESTING </u> </b> <br>
 			The people who had fun gaming and gave me their input <br>
-			<b> David, Qi Rong <br> Jayden, Yi Jun </b> <br> <br>
+			<b> David, Qi Rong, <br> Jayden, Yi Jun </b> <br> <br>
 			<b> <u> SUGGESTIONS </u> </b> <br>
 			The people who looked and said "whoa what if XXX was in the game?" <br>
-			<b> David, Jayden, Qi Rong <br> Mr Khoo, 戴老师, Marcus </b> <br> <br>
+			<b> David, Jayden, Qi Rong, <br> Mr Khoo, 戴老师, Marcus </b> <br> <br>
 			<b> <u> AND OF COURSE, YOU! </u> </b> <br>
-			Due to the nature of this game, you are probably already credited, but heres a <b> HUGE THANKS ANYWAY </b> for playing my game!! 
+			Due to the nature of this game, you are probably already credited, but heres a <b> HUGE THANKS ANYWAY </b> for playing LITTLE SHOOTER!! 
 		</p>
 	</div>
 	<script>
@@ -373,6 +378,10 @@
 			}
 			if (controller.dash && (waiter.dashCooldown == 0 || waiter.dashCooldown == null)) {
 				waiter.dashCooldown = 30;
+				var element = document.getElementById('dash');
+				element.style.left = hero.x + 'px';
+				element.style.top = hero.y + 'px';
+				element.style.visibility = 'visible';
 				if ((controller.left || controller.a) && (controller.up || controller.w)) {
 					hero.x -= 25 * HERO_MOVEMENT;
 					hero.y -= 25 * HERO_MOVEMENT;
@@ -437,12 +446,12 @@
  			if (highscore < score && parseInt(score.toString().slice(-2)) == '00') {
 				var element = document.getElementById('highscore');
 				setCookie("highscore", score, 365);
-				element.innerHTML = 'HIGHSCORE: ' + score;
+				element.innerHTML = 'HIGHSCORE: ' + getCookie('highscore');
 			}
 			if (hardscore < score && parseInt(score.toString().slice(-2)) == '69') {
 				var element = document.getElementById('hardscore');
 				setCookie("hardscore", score, 365);
-				element.innerHTML = 'HARDSCORE: ' + score;
+				element.innerHTML = 'HARDSCORE: ' + getCookie('hardscore');
 			}
 		}
 
@@ -605,6 +614,16 @@
 						element.style.width = cooldownbar1.w + 'px';
 					} else if (waiter[key] == 0) {
 						var element = document.getElementById(cooldownbar1.element);
+						element.style.visibility = 'hidden';
+					}
+					if (waiter[key] == 29) {
+						var element = document.getElementById('dash');
+						element.className = 'dash2';
+						element.style.left = (parseInt(element.style.left) - 6) + 'px';
+						element.style.top = (parseInt(element.style.top) - 6) + 'px';
+					} else if (waiter[key] == 27) {
+						var element = document.getElementById('dash');
+						element.className = 'dash1';
 						element.style.visibility = 'hidden';
 					}
 				}
