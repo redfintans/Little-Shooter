@@ -1,3 +1,7 @@
+## [1.1.2.3] incomplete
+Changed highscore system for easier local testing.
+Changed welcome text.
+Changed credits text.
 ## [1.1.2.2] 22/4/23
 Fixed bug causing hardscore not to update when highscore is too high and vice versa.
 Changed highscore and hardscore to update every frame.
