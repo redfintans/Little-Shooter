@@ -5,6 +5,6 @@ This shooter game was initially made for a school project, but it has now been m
 
 Instructions to play are within the code.
 
-Play the latest version now! Currently v1.0.0.4!
+Play the latest version now! Currently v1.1.4.1!
 
 https://htmlpreview.github.io/?https://raw.githubusercontent.com/redfintans/Little-Shooter/main/Little%20Shooter.html
