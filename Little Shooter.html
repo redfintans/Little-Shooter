@@ -232,7 +232,7 @@
 			z-index: 3;
 		}
 		.death2 {
-			color: #ff000089;
+			color: #ff0000;
 			border: dotted 4px;
 			width: 32px;
 			height: 32px;
@@ -248,6 +248,33 @@
 			position: absolute;
 			z-index: 3;
 		}
+		.death4 {
+			color: #ff00009a;
+			color: #39ff1489;
+			border: dotted 2px;
+			width: 18px;
+			height: 18px;
+			position: absolute;
+			transform: rotate(60deg);
+			z-index: 2;
+		}
+		.death5 {
+			color: #ff00009a;
+			border: dotted 4px;
+			width: 32px;
+			height: 32px;
+			position: absolute;
+			transform: rotate(30deg);
+			z-index: 2;
+		}
+		.death6 {
+			color: #ff00009a;
+			border: dotted 5px;
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			z-index: 2;
+		}
 	</style>
 </head>
 <body>
@@ -258,7 +285,8 @@
 	<div id='cooldownbar2'></div>
 	<div id='score'></div>
 	<div id='dash' class='dash1' style='visibility: hidden;'></div>
-	<div id='death' class='death1' style='visibility: hidden;'></div>
+	<div id='deathbox1' class='death1' style='visibility: hidden;'></div>
+	<div id='deathbox2' class='death4' style='visibility: hidden;'></div>
 	<div id='highscore'></div>
 	<div id='hardscore'></div>
 	<button id='fillerbutton'></button>
@@ -271,7 +299,7 @@
 	<div id='gameover'><h2>GAME OVER</h2></div>
 	<div id='hardmodetext'><h2>HARD MOD LOL</h2></div>
 	<div id='welcometext'>
-		<h2> LITTLE SHOOTER [1.1.4.0] </h2>
+		<h2> LITTLE SHOOTER [1.1.4.1] </h2>
 		<p>
 			Arrow keys or WASD to move. <br>
 			Press F to dash and teleport forward! <br>
@@ -410,6 +438,8 @@
 				element.style.left = hero.x + 'px';
 				element.style.top = hero.y + 'px';
 				element.style.visibility = 'visible';
+				element = document.getElementById(cooldownbar1.element);
+				element.style.visibility = 'visible';
 				if ((controller.left || controller.a) && (controller.up || controller.w)) {
 					hero.x -= 25 * HERO_MOVEMENT;
 					hero.y -= 25 * HERO_MOVEMENT;
@@ -530,8 +560,12 @@
 		function gameOver() {
 			if (!gameover) {
 				gameover = true;
-				waiter.die = 8;
-				var element = document.getElementById('death');
+				waiter.die = 12;
+				var element = document.getElementById('deathbox1');
+				element.style.visibility = 'visible';
+				element.style.left = hero.x + 'px';
+				element.style.top = hero.y + 'px';
+				element = document.getElementById('deathbox2');
 				element.style.visibility = 'visible';
 				element.style.left = hero.x + 'px';
 				element.style.top = hero.y + 'px';
@@ -585,7 +619,7 @@
 				ensureBounds(enemies[i], true);
 			}
 			if (!gameover && laser.y > -200) {
-				laser.y -= 12;
+				laser.y -= 11;
 			}
 			if (!gameover) {
 				cooldownbar1.x = hero.x - 10;
@@ -623,12 +657,11 @@
 				} else if (key == 'hardmode' && waiter[key] == 0) {
 					var element = document.getElementById('hardmodetext');
 					element.style.visibility = 'hidden';
-				} else if (key == 'dashCooldown' && !gameover) {
+				} else if (key == 'dashCooldown') {
 					if (waiter[key] == 30) {
 						cooldownbar1.w = 40;
 						var element = document.getElementById(cooldownbar1.element);
 						element.style.width = cooldownbar1.w + 'px';
-						element.style.visibility = 'visible';
 					} else if (waiter[key] == 24) {
 						cooldownbar1.w = 32;
 						var element = document.getElementById(cooldownbar1.element);
@@ -660,20 +693,47 @@
 						element.style.visibility = 'hidden';
 					}
 				} else if (key == 'die') {
-					if (waiter[key] == 6) {
-						var element = document.getElementById('death');
+					if (waiter[key] == 8) {
+						var element = document.getElementById('deathbox1');
 						element.className = 'death2';
 						element.style.left = (parseInt(element.style.left) - 7) + 'px';
 						element.style.top = (parseInt(element.style.top) - 7) + 'px';
-					} else if (waiter[key] == 3) {
-						var element = document.getElementById('death');
+					} else if (waiter[key] == 4) {
+						var element = document.getElementById('deathbox1');
 						element.className = 'death3';
 						element.style.left = (parseInt(element.style.left) - 10) + 'px';
 						element.style.top = (parseInt(element.style.top) - 10) + 'px';
 					} else if (waiter[key] == 0) {
-						var element = document.getElementById('death');
+						var element = document.getElementById('deathbox1');
 						element.className = 'death1';
 						element.style.visibility = 'hidden';
+					}
+					if (waiter[key] == 0) {
+						var element = document.getElementById('deathbox2');
+						element.style.visibility = 'hidden';
+					} else if (waiter[key] % 4 == 0) {
+						var element = document.getElementById('deathbox2');
+						element.className = 'death4';
+						element.style.visibility = 'visible';
+						console.log(element.style.left);
+					} else if (waiter[key] % 4 == 3) {
+						var element = document.getElementById('deathbox2');
+						element.className = 'death5';
+						element.style.left = (parseInt(element.style.left) - 7) + 'px';
+						element.style.top = (parseInt(element.style.top) - 7) + 'px';
+						console.log(element.style.left);
+					} else if (waiter[key] % 4 == 2) {
+						var element = document.getElementById('deathbox2');
+						element.className = 'death6';
+						element.style.left = (parseInt(element.style.left) - 11) + 'px';
+						element.style.top = (parseInt(element.style.top) - 11) + 'px';
+						console.log(element.style.left);
+					} else if (waiter[key] % 4 == 1) {
+						var element = document.getElementById('deathbox2');
+						console.log(element.style.left);
+						element.style.visibility = 'hidden';
+						element.style.left = (parseInt(element.style.left) + 18) + 'px';
+						element.style.top = (parseInt(element.style.top) + 18) + 'px';
 					}
 				}
 			});
