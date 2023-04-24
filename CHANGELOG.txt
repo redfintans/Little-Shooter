@@ -1,3 +1,6 @@
+## [1.1.4.1] 24/4/23
+Changed player death animation.
+Fixed bug causing dash animation to linger after death.
 ## [1.1.4.0] 24/4/23
 Added player death animation.
 Changed speed of hardmode enemy spawns.
